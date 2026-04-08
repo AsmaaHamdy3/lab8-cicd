@@ -28,4 +28,13 @@ jobs:
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
-        with
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/lab8-cicd
+            git pull
+            docker compose pull
+            docker compose down
+            docker compose up -d
